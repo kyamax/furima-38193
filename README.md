@@ -79,7 +79,7 @@ has_one :address
 |city              |string     |null: false                   |
 |address1          |string     |null: false                   |
 |address2          |string     |                              |
-|phone_number      |integer    |null: false                   |
+|phone_number      |string     |null: false                   |
 |order             |references |null: false, foreign_key: true|
 
 ### Association
