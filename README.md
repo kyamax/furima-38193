@@ -42,17 +42,17 @@ has_many :orders
 
 
 ## itemsテーブル
-|column            |type       |option                        |
-|------------------|-----------|------------------------------|
-|name              |string     |null: false                   |
-|explanation       |text       |null: false                   |
-|category          |string     |null: false                   |
-|condition         |string     |null: false                   |
-|shipping_charges  |string     |null: false                   |
-|prefecture        |string     |null: false                   |
-|days              |string     |null: false                   |
-|price             |integer    |null: false                   |
-|user_id           |references |null: false, foreign_key: true|
+|column             |type       |option                        |
+|-------------------|-----------|------------------------------|
+|name               |string     |null: false                   |
+|explanation        |text       |null: false                   |
+|category_id        |integer    |null: false                   |
+|condition_id       |integer    |null: false                   |
+|shipping_charges_id|integer    |null: false                   |
+|prefecture_id      |integer    |null: false                   |
+|days_id            |integer    |null: false                   |
+|price              |integer    |null: false                   |
+|user               |references |null: false, foreign_key: true|
 
 ### Association
 belongs_to :user
@@ -62,8 +62,8 @@ has_one :order
 ## ordersテーブル
 |column            |type       |option                        |
 |------------------|-----------|------------------------------|
-|user_id           |references |null: false, foreign_key: true|
-|item_id           |references |null: false, foreign_key: true|
+|user              |references |null: false, foreign_key: true|
+|item              |references |null: false, foreign_key: true|
 
 ### Association
 belongs_to :user
@@ -78,9 +78,9 @@ has_one :address
 |prefecture        |string     |null: false                   |
 |city              |string     |null: false                   |
 |address1          |string     |null: false                   |
-|address2          |string     |null: false                   |
+|address2          |string     |                              |
 |phone_number      |integer    |null: false                   |
-|order_id          |references |null: false, foreign_key: true|
+|order             |references |null: false, foreign_key: true|
 
 ### Association
 belongs_to :order
