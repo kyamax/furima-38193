@@ -1,14 +1,15 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :create]
+
   def index
     @item = Item.find(params[:item_id])
     @order_form = OrderForm.new
+    redirect_to root_path if @item.order.present? || current_user.id == @item.user_id
   end
 
   def create
-    # binding.pry
     @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
-    # binding.pry
     if @order_form.valid?
       # Payjp.api_key = "sk_test_61eefc9f9d19b2a7903c3705"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       # Payjp::Charge.create(
