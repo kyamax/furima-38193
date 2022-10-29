@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
   def create
     @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
-    binding.pry
     if @order_form.valid?
       pay_item
       @order_form.save
@@ -27,11 +26,11 @@ class OrdersController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_61eefc9f9d19b2a7903c3705"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: order_params[:price],  # 商品の値段が取れていない
-      card: order_params[:token],    # カードトークン
-      currency: 'jpy'                 # 通貨の種類（日本円）
+      amount: order_params[:price],  
+      card: order_params[:token],   
+      currency: 'jpy'                 
     )
   end
 
