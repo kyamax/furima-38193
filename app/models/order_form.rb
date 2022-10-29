@@ -1,6 +1,6 @@
 class OrderForm
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :address1, :address2, :phone_number, :order_id
+  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :address1, :address2, :phone_number, :order_id, :price, :token
 
   with_options presence: true do
     validates :user_id
@@ -10,6 +10,8 @@ class OrderForm
     validates :city
     validates :address1
     validates :phone_number, format: {with: /\A\d{10}\z|\A\d{11}\z/ , message: "Input only number"}
+    validates :token
+    validates :price
   end
 
   def save
