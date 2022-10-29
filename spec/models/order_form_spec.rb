@@ -55,19 +55,19 @@ RSpec.describe OrderForm, type: :model do
         expect(@order_form.errors.full_messages).to include("Phone number can't be blank")
       end
       it 'phone_numberが9桁以下では登録できない' do
-        @order_form.phone_number = "1111111"
+        @order_form.phone_number = '1111111'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number input correctly")
+        expect(@order_form.errors.full_messages).to include('Phone number input correctly')
       end
       it 'phone_numberが12桁以上では登録できない' do
-        @order_form.phone_number = "111111111111111"
+        @order_form.phone_number = '111111111111111'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number input correctly")
+        expect(@order_form.errors.full_messages).to include('Phone number input correctly')
       end
       it 'phone_numberが半角数字以外が含まれている場合は登録できない' do
-        @order_form.phone_number = "1あかい11"
+        @order_form.phone_number = '1あかい11'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number input correctly")
+        expect(@order_form.errors.full_messages).to include('Phone number input correctly')
       end
       it 'userが紐づいていないと登録できない' do
         @order_form.user_id = nil
