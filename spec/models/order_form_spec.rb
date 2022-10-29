@@ -18,6 +18,16 @@ RSpec.describe OrderForm, type: :model do
     end
 
     context "商品登録ができない場合" do
+      it "priceが空では登録できない" do
+        @order_form.price = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Price can't be blank")
+      end
+      it "tokenが空では登録できない" do
+        @order_form.token = nil
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Token can't be blank")
+      end
       it "post_codeが空では登録できない" do
         @order_form.post_code = nil
         @order_form.valid?
