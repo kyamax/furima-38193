@@ -55,5 +55,4 @@ class ItemsController < ApplicationController
   def move_to_index
     redirect_to items_path if @item.user_id != current_user.id
   end
-
 end
