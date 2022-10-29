@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OrderForm, type: :model do
   before do
-    order = FactoryBot.build(:order)
-    @order_form = FactoryBot.build(:order_form, user_id: order.user_id, item_id: order.item_id)
+    user = FactoryBot.build(:user)
+    item = FactoryBot.build(:item)
+    @order_form = FactoryBot.build(:order_form, user_id: user.id, item_id: item.id)
   end
 
   describe '配送先情報の保存' do
@@ -18,11 +19,6 @@ RSpec.describe OrderForm, type: :model do
     end
 
     context '商品登録ができない場合' do
-      it 'priceが空では登録できない' do
-        @order_form.price = nil
-        @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Price can't be blank")
-      end
       it 'tokenが空では登録できない' do
         @order_form.token = nil
         @order_form.valid?
@@ -36,7 +32,7 @@ RSpec.describe OrderForm, type: :model do
       it 'post_codeが数字3文字-数字4文字の組み合わせでないと登録できない' do
         @order_form.post_code = 'asddfd'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include('Post code Input correctly')
+        expect(@order_form.errors.full_messages).to include('Post code input correctly')
       end
       it 'prefectureに「---」が選択されている場合は登録できない' do
         @order_form.prefecture_id = 1
@@ -57,6 +53,21 @@ RSpec.describe OrderForm, type: :model do
         @order_form.phone_number = nil
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Phone number can't be blank")
+      end
+      it 'phone_numberが9桁以下では登録できない' do
+        @order_form.phone_number = "1111111"
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Phone number input correctly")
+      end
+      it 'phone_numberが12桁以上では登録できない' do
+        @order_form.phone_number = "111111111111111"
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Phone number input correctly")
+      end
+      it 'phone_numberが半角数字以外が含まれている場合は登録できない' do
+        @order_form.phone_number = "1あかい11"
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Phone number input correctly")
       end
       it 'userが紐づいていないと登録できない' do
         @order_form.user_id = nil
